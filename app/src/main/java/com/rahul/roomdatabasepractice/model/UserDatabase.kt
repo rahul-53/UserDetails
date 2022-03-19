@@ -15,14 +15,17 @@ abstract class UserDatabase:RoomDatabase() {
         fun getDatabase(context: Context):UserDatabase{
             if (INSTANCE!=null)
                 return INSTANCE!!
+
             synchronized(this){
-                Room.databaseBuilder(
+                val instance =Room.databaseBuilder(
                     context.applicationContext,
                     UserDatabase::class.java,
                     "user_database"
                 ).build()
+                INSTANCE = instance
+                return instance
             }
-            return INSTANCE!!
+
         }
     }
 }
